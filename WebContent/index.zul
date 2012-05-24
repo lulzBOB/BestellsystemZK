@@ -1,0 +1,64 @@
+<?page title="Bestellsystem BAG"?>
+
+<?script src="/js/bestellsystem.js" ?>
+<?script src="/js/jQuery.js" ?>
+<!-- <?style src="/css/main.css" ?>  -->
+
+	<window id="win" sclass="window" xmlns:w="http://www.zkoss.org/2005/zk/client" apply="org.zkoss.bind.BindComposer" 
+			viewModel="@id('vm') @init('de.bag.bestellsystem.OrderViewModel')"  >
+
+				<label sclass="title" value="Bestellsystem Brockhaus AG"/>		
+			
+			<span sclass="outputWrapper">
+				
+				<grid class="grid" id="outputGrid" >
+					<columns>
+						<column label="Mitarbeiter" sclass="column" />
+						<column label="Artikel" sclass="column" />
+						<column label="Preis  (€)" sclass="column" />
+						<column label="Fahrer" sclass="column" />
+						<column label="Ziel" sclass="column"></column>
+						<column label="Deadline  (hh:mm)" sclass="column" />
+					</columns>
+					
+					<rows id="outputRows" children="@load(vm.completeOrder)" >
+						<template name="children" var="order">
+							<row>
+								 <textbox cols="40" value="@load(order.customer)" readonly="true" ></textbox>
+					    		 <textbox cols="40" value="@load(order.article)" readonly="true" ></textbox>
+					    		 <doublebox cols="40" value="@load(order.unitPrice)" readonly="true" ></doublebox>
+					    		 <span sclass="inputFahrer">Fahrer<checkbox checked="@loard(order.driver)" disabled="true" ></checkbox></span>
+					    		 <textbox cols="40" value="@load(order.destination)" readonly="true" ></textbox>
+					    		 <doublebox cols="40" value="@load(order.deadline)" readonly="true"  ></doublebox>
+							</row>
+						</template>
+					</rows>
+				</grid>	
+				
+				<button label="Bestellung löschen" id="clearBtn" sclass="floatLeft button" onClick="@command('clear')" />
+				<button label="Bestellung drucken" w:onClick="window.print()" sclass="floatRight button" id="printBtn"  />
+			</span>
+			    
+			<span sclass="inputWrapper" >
+				<grid sclass="inputGrid grid"  >			  
+				    <rows>
+				    	<row id="inputRow">
+						 	 <textbox cols="40" id="inputCustomer" value="@load(vm.partialOrder.customer) @save(vm.partialOrder.customer, before = 'submitOrder')" ></textbox>
+				    		 <textbox cols="40" id="inputArticle" value="@load(vm.partialOrder.article) @save(vm.partialOrder.article, before = 'submitOrder')" ></textbox>
+				    		 <textbox cols="40" id="inputPrice" value="@load(vm.partialOrder.unitPrice) @save(vm.partialOrder.unitPrice, before = 'submitOrder')" ></textbox>
+				    		 <span sclass="inputFahrer">
+				    		 	Fahrer
+				    		 	<checkbox  id="inputDriver" checked="@load(vm.partialOrder.driver) @save(vm.partialOrder.driver, before = 'submitOrder')"></checkbox>
+				    		 </span>
+				    		 <textbox cols="40" id="inputDestination" value="@load(vm.partialOrder.destination) @save(vm.partialOrder.destination, before = 'submitOrder')" ></textbox>
+				    		 <textbox cols="40" id="inputDeadline"  value="@load(vm.partialOrder.deadline) @save(vm.partialOrder.deadline, before = 'submitOrder')" ></textbox>
+				    	</row>   		    	
+				    </rows>
+			    </grid>
+
+			    <button label="Meine Bestellung abschicken" sclass="floatRight button" id="submitBtn"
+			     		onClick="@command('submitOrder')"></button>
+		    </span>
+			    
+			
+	</window>
