@@ -5,13 +5,14 @@
 <!-- <?style src="/css/main.css" ?>  -->
 
 	<window id="win" sclass="window" xmlns:w="http://www.zkoss.org/2005/zk/client" apply="org.zkoss.bind.BindComposer" 
-			viewModel="@id('vm') @init('de.bag.bestellsystem.OrderViewModel')"  >
+			viewModel="@id('vm') @init('de.bag.bestellsystem.OrderViewModel')" >
 
 				<label sclass="title" value="Bestellsystem Brockhaus AG"/>		
 			
 			<span sclass="outputWrapper">
 				
 				<grid class="grid" id="outputGrid" >
+				
 					<columns>
 						<column label="Mitarbeiter" sclass="column" />
 						<column label="Artikel" sclass="column" />
@@ -38,7 +39,8 @@
 				<button label="Bestellung löschen" id="clearBtn" sclass="floatLeft button" onClick="@command('clear')" />
 				<button label="Bestellung drucken" w:onClick="window.print()" sclass="floatRight button" id="printBtn"  />
 			</span>
-			    
+			 
+
 			<span sclass="inputWrapper" >
 				<grid sclass="inputGrid grid"  >			  
 				    <rows>
@@ -58,6 +60,7 @@
 
 			    <button label="Meine Bestellung abschicken" sclass="floatRight button" id="submitBtn"
 			     		onClick="@command('submitOrder')"></button>
+		
 		    </span>
 			    
 			

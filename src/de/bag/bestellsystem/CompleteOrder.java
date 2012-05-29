@@ -2,6 +2,8 @@ package de.bag.bestellsystem;
 
 import java.util.ArrayList;
 
+import org.zkoss.bind.annotation.ScopeParam;
+
 /**
   *
   * Beschreibung
@@ -11,15 +13,16 @@ import java.util.ArrayList;
   */
 
 public class CompleteOrder {
-
+	
+	
 	private ArrayList<PartialOrder> completeOrder;
 	
 	public ArrayList<PartialOrder> getCompleteOrder() {
 		return completeOrder;
 	}
 	
-	public void setCompleteOrder(PartialOrder partialOrder) {
-		completeOrder.add(partialOrder);
+	public void setCompleteOrder(ArrayList<PartialOrder> completeOrder) {
+		this.completeOrder = completeOrder;
 	}
 	
 	

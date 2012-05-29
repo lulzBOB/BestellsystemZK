@@ -1,15 +1,11 @@
 package de.bag.bestellsystem;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.annotation.ScopeParam;
-import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
-import org.zkoss.zk.ui.WebApp;
-import org.zkoss.zk.ui.ext.ScopeListener;
 
 /**
  * @author afast
@@ -18,13 +14,17 @@ import org.zkoss.zk.ui.ext.ScopeListener;
  */
 
 public class OrderViewModel {
-
-	private ArrayList<PartialOrder> completeOrder = new ArrayList<PartialOrder>();
 	
+	private PartialOrder partialOrder = new PartialOrder();
 	
-	private  PartialOrder partialOrder = new PartialOrder();
+	//private CompleteOrder completeOrder = new CompleteOrder();
+	
+	private ArrayList<PartialOrder> completeOrder = new ArrayList<>();
 	
 	public ArrayList<PartialOrder> getCompleteOrder() {
+		if(Sessions.getCurrent().getAttribute("completeOrder")!=null){
+			this.completeOrder = (ArrayList<PartialOrder>) Sessions.getCurrent().getAttribute("completeOrder");
+		}
 		return completeOrder;
 	}
 	
@@ -32,12 +32,18 @@ public class OrderViewModel {
 		return partialOrder;
 	}
 
+	@Init
+	public void loadData(){
+		
+	}
+	
+	
 	@NotifyChange("*")
 	@Command
 	public void submitOrder() {
 		completeOrder.add(partialOrder);
-		this.partialOrder = new PartialOrder();
-		Sessions.getCurrent();
+		Sessions.getCurrent().setAttribute("completeOrder", completeOrder);
+		this.partialOrder = new PartialOrder();	
 	}
 	
 	@NotifyChange("completeOrder")
@@ -45,4 +51,6 @@ public class OrderViewModel {
 	public void clear(){
 		this.completeOrder = new ArrayList<PartialOrder>();
 	}
+
+	
 }
