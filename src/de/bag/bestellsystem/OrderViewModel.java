@@ -1,5 +1,6 @@
 package de.bag.bestellsystem;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.zkoss.bind.annotation.Command;
@@ -17,10 +18,10 @@ public class OrderViewModel {
 	
 	private PartialOrder partialOrder = new PartialOrder();
 	
-	//private CompleteOrder completeOrder = new CompleteOrder();
-	
 	private ArrayList<PartialOrder> completeOrder = new ArrayList<>();
 	
+	private Database database = new Database();
+
 	public ArrayList<PartialOrder> getCompleteOrder() {
 		if(Sessions.getCurrent().getAttribute("completeOrder")!=null){
 			this.completeOrder = (ArrayList<PartialOrder>) Sessions.getCurrent().getAttribute("completeOrder");
@@ -40,10 +41,11 @@ public class OrderViewModel {
 	
 	@NotifyChange("*")
 	@Command
-	public void submitOrder() {
+	public void submitOrder() throws  SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		completeOrder.add(partialOrder);
 		Sessions.getCurrent().setAttribute("completeOrder", completeOrder);
 		this.partialOrder = new PartialOrder();	
+		database
 	}
 	
 	@NotifyChange("completeOrder")
@@ -52,5 +54,4 @@ public class OrderViewModel {
 		this.completeOrder = new ArrayList<PartialOrder>();
 	}
 
-	
 }
