@@ -45,7 +45,8 @@ public class OrderViewModel {
 		completeOrder.add(partialOrder);
 		Sessions.getCurrent().setAttribute("completeOrder", completeOrder);
 		this.partialOrder = new PartialOrder();	
-		database
+		String blubb = database.getConnection().getCatalog();
+		String möp;
 	}
 	
 	@NotifyChange("completeOrder")
